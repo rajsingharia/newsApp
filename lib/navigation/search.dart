@@ -33,10 +33,11 @@ class _SearchNavState extends State<SearchNav> {
                   decoration: InputDecoration(hintText: "What's in your mind"),
                   controller: _textEditingController,
                   onChanged: (text) {
-                    if (_textEditingController.text == "")
+                    if (_textEditingController.text.isEmpty)
                       setState(() {
                         serached = false;
                       });
+                    else{
                     setState(() {
                       serached = true;
                       s = _textEditingController.text;
@@ -44,7 +45,7 @@ class _SearchNavState extends State<SearchNav> {
                           "http://newsapi.org/v2/everything?q=$s&sortBy=publishedAt&apiKey=69211d3827464206986d9d162bc247e0";
 
                       getData(url);
-                    });
+                    });}
                   },
                 ),
                 trailing: SizedBox(
