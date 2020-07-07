@@ -65,11 +65,15 @@ class _SearchNavState extends State<SearchNav> {
               ),
               serached != true
                   ? Container(
+                      padding: EdgeInsets.all(50),
+                      color: Colors.white,
                       height: 510,
                       child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Nothing To Show",
+                        alignment: Alignment.topCenter,
+                        child: Image.asset(
+                          "assets/images/up.gif",
+                          height: 80,
+                          width: 80,
                         ),
                       ),
                     )
