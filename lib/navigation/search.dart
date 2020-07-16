@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:api/home/webView.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class SearchNav extends StatefulWidget {
@@ -13,8 +14,19 @@ String s;
 bool serached = false;
 
 class _SearchNavState extends State<SearchNav> {
-  @override
   List data;
+  Box<String> headlineBox;
+  Box<String> imageUrlBox;
+  Box<String> urlBox;
+
+  @override
+  void initState() {
+    super.initState();
+    headlineBox = Hive.box<String>("Headline");
+    imageUrlBox = Hive.box<String>("ImageUrl");
+    urlBox = Hive.box<String>("Url");
+  }
+
   getData(String url) async {
     var response = await http.get(Uri.encodeFull(url));
     var extractdata = jsonDecode(response.body);
@@ -41,9 +53,8 @@ class _SearchNavState extends State<SearchNav> {
                       setState(() {
                         serached = true;
                         s = _textEditingController.text;
-                        String url =
+                        final String url =
                             "http://newsapi.org/v2/everything?q=$s&sortBy=publishedAt&apiKey=69211d3827464206986d9d162bc247e0";
-
                         getData(url);
                       });
                     }
@@ -85,6 +96,17 @@ class _SearchNavState extends State<SearchNav> {
                               itemCount: data.length,
                               itemBuilder: (context, int index) {
                                 return GestureDetector(
+                                  onLongPress: () {
+                                    showSnackBar();
+                                    headlineBox.put(data[index]["title"],
+                                        data[index]["title"].toString());
+
+                                    imageUrlBox.put(data[index]["urlToImage"],
+                                        data[index]["urlToImage"].toString());
+
+                                    urlBox.put(data[index]["url"],
+                                        data[index]["url"].toString());
+                                  },
                                   onTap: () {
                                     String url = data[index]["url"];
                                     Navigator.push(context,
@@ -161,5 +183,12 @@ class _SearchNavState extends State<SearchNav> {
             ],
           )),
     );
+  }
+
+  void showSnackBar() {
+    final snackBar = new SnackBar(
+      content: Text("Saved"),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 }
