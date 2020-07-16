@@ -101,9 +101,15 @@ class _SearchNavState extends State<SearchNav> {
                                     headlineBox.put(data[index]["title"],
                                         data[index]["title"].toString());
 
-                                    imageUrlBox.put(data[index]["urlToImage"],
-                                        data[index]["urlToImage"].toString());
-
+                                    if (data[index]["urlToImage"].toString() ==
+                                        "null")
+                                      imageUrlBox.put(
+                                          "https://cdn4.wpbeginner.com/wp-content/uploads/2013/04/wp404error.jpg",
+                                          "https://cdn4.wpbeginner.com/wp-content/uploads/2013/04/wp404error.jpg");
+                                    else {
+                                      imageUrlBox.put(data[index]["urlToImage"],
+                                          data[index]["urlToImage"].toString());
+                                    }
                                     urlBox.put(data[index]["url"],
                                         data[index]["url"].toString());
                                   },

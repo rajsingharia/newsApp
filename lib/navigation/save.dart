@@ -54,11 +54,7 @@ class _SaveNavState extends State<SaveNav> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                                image: imageUrlBox.getAt(index).toString() !=
-                                        "null"
-                                    ? NetworkImage(imageUrlBox.getAt(index))
-                                    : NetworkImage(
-                                        "https://cdn4.wpbeginner.com/wp-content/uploads/2013/04/wp404error.jpg"),
+                                image: NetworkImage(imageUrlBox.getAt(index)),
                                 fit: BoxFit.cover),
                           ),
                         ),
